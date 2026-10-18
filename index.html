@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Lab Arcade</title>
+  <meta name="description" content="Calculadora de bancada de laboratório: soluções, células por mL, estoque molar e concentração.">
+  <meta name="theme-color" content="#0a0a1f">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="no-referrer">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Lab Arcade">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="px">
+    <svg id="flask" viewBox="0 0 10 11" shape-rendering="crispEdges" aria-hidden="true"></svg>
+    <div class="titles">
+      <h1>LAB ARCADE</h1>
+      <p class="tag">CALCULADORA DE BANCADA</p>
+      <p class="tag tag-start blink">INSIRA OS DADOS</p>
+      <p class="tag tag-sync" id="syncTag" hidden></p>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Modo">
+    <button type="button" class="tab" data-mode="sol" aria-pressed="true">SOLUÇÕES</button>
+    <button type="button" class="tab" data-mode="cel" aria-pressed="false">CÉLULAS POR mL</button>
+    <button type="button" class="tab" data-mode="est" aria-pressed="false">ESTOQUE MOLAR</button>
+    <button type="button" class="tab" data-mode="con" aria-pressed="false">CONCENTRAÇÃO</button>
+  </nav>
+
+  <div id="modeSol" class="mode">
+
+  <section aria-labelledby="h1s">
+    <h2 class="stage-h" id="h1s"><span class="lv">FASE 1</span> ESCOLHA A SOLUÇÃO</h2>
+    <div id="picks"></div>
+  </section>
+
+  <section aria-labelledby="h2s">
+    <h2 class="stage-h" id="h2s"><span class="lv">FASE 2</span> VOLUME DESEJADO</h2>
+    <div class="vol">
+      <label class="vol-in" for="vol"><input id="vol" type="text" inputmode="decimal" pattern="[0-9.,]*" autocomplete="off" value="50" aria-label="Volume final em mL"><span class="unit">mL</span></label>
+      <div class="presets" id="presets" role="group" aria-label="Volumes rápidos"></div>
+    </div>
+  </section>
+
+  <div id="out" aria-live="polite"></div>
+
+  </div>
+
+  <div id="modeCel" class="mode big" hidden>
+    <section aria-labelledby="hc1">
+      <h2 class="stage-h" id="hc1"><span class="lv">FASE 1</span> DADOS DA CONTAGEM</h2>
+      <div class="fields">
+        <div class="fld"><label for="c1">CONCENTRAÇÃO CONTADA (C₁)</label><div class="vol-in"><input class="num" id="c1" type="text" inputmode="decimal" pattern="[0-9.,]*" autocomplete="off" value="100"><select class="exp" id="ec1" aria-label="Notação científica de C1"><option value="3">×10³</option><option value="4" selected>×10⁴</option><option value="5">×10⁵</option><option value="6">×10⁶</option><option value="7">×10⁷</option><option value="0">×1</option></select><span class="unit">/mL</span></div></div>
+        <div class="fld"><label for="c2">CONCENTRAÇÃO DESEJADA (C₂)</label><div class="vol-in"><input class="num" id="c2" type="text" inputmode="decimal" pattern="[0-9.,]*" autocomplete="off" value="1"><select class="exp" id="ec2" aria-label="Notação científica de C2"><option value="3">×10³</option><option value="4" selected>×10⁴</option><option value="5">×10⁵</option><option value="6">×10⁶</option><option value="7">×10⁷</option><option value="0">×1</option></select><span class="unit">/mL</span></div></div>
+        <div class="fld"><label for="vf">VOLUME FINAL (V₂)</label><div class="vol-in"><input class="num" id="vf" type="text" inputmode="decimal" pattern="[0-9.,]*" autocomplete="off" value="3000"><span class="unit">µL</span></div></div>
+      </div>
+      <h3 class="sub-h">PLACA (OPCIONAL, CALCULA O VOLUME FINAL)</h3>
+      <div class="fields two">
+        <div class="fld"><label for="nw">Nº DE POÇOS</label><div class="vol-in"><input class="num" id="nw" type="text" inputmode="decimal" pattern="[0-9.,]*" autocomplete="off" placeholder="0"><span class="unit">poços</span></div></div>
+        <div class="fld"><label for="vw">VOLUME POR POÇO</label><div class="vol-in"><input class="num" id="vw" type="text" inputmode="decimal" pattern="[0-9.,]*" autocomplete="off" placeholder="0"><span class="unit">µL</span></div></div>
+      </div>
+    </section>
+    <div id="outCel" aria-live="polite"></div>
+  </div>
+  <div id="modeEst" class="mode big" hidden></div>
+  <div id="modeCon" class="mode big" hidden></div>
+
+  <footer>Confira sempre os valores antes de preparar.</footer>
+</div>
+<button type="button" id="up" class="up" aria-label="Voltar ao topo" hidden>&#9650;</button>
+
+<noscript><p style="color:#ffe14d;text-align:center">Ative o JavaScript para usar o Lab Arcade.</p></noscript>
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>
