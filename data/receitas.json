@@ -1,0 +1,411 @@
+[
+  {
+    "id": "cultura",
+    "cat": "MEIOS DE CULTURA",
+    "name": "Meio completo",
+    "sub": "DMEM/F12 + 10% SFB + 1% AA",
+    "acc": "#00e5ff",
+    "def": 50,
+    "parts": [
+      {
+        "k": "base",
+        "n": "DMEM/F12",
+        "s": "meio base",
+        "t": "rest"
+      },
+      {
+        "k": "sfb",
+        "n": "SFB",
+        "t": "vol",
+        "per": 100
+      },
+      {
+        "k": "aa",
+        "n": "Antibiótico-antimicótico (AA)",
+        "t": "vol",
+        "per": 10
+      }
+    ],
+    "steps": [
+      "Trabalhe no fluxo laminar, com frascos e pipetas limpos com álcool 70%",
+      "Pipete {base} de DMEM/F12 no frasco ou tubo estéril.",
+      "Adicione {sfb} de SFB.",
+      "Adicione {aa} de AA.",
+      "Homogeneíze por inversão suave, sem formar espuma. Identifique com nome e data"
+    ]
+  },
+  {
+    "id": "dmono",
+    "cat": "MEIOS DE CULTURA",
+    "name": "Diferenciação",
+    "opt": "Diferenciação (monocultura)",
+    "sub": "Monocultura: 0,5% SFB, 1% AA, RA",
+    "acc": "#39ff88",
+    "def": 10,
+    "parts": [
+      {
+        "k": "base",
+        "n": "DMEM/F12",
+        "t": "rest"
+      },
+      {
+        "k": "aa",
+        "n": "Antibiótico-antimicótico (AA)",
+        "t": "vol",
+        "per": 10
+      },
+      {
+        "k": "sfb",
+        "n": "SFB",
+        "t": "vol",
+        "per": 5
+      },
+      {
+        "k": "ra",
+        "n": "Ácido retinóico (RA)",
+        "s": "1 µL a cada 10 mL",
+        "t": "vol",
+        "per": 0.1,
+        "sub": "1 µL / 10 mL"
+      }
+    ],
+    "steps": [
+      "Trabalhe no fluxo laminar, com material e frascos limpos com álcool 70%.",
+      "Pipete {base} de DMEM/F12 no tubo Falcon estéril.",
+      "Adicione {aa} de antibiótico.",
+      "Adicione {sfb} de SFB.",
+      "Adicione por último {ra} de ácido retinóico, protegendo da luz.",
+      "Homogeneíze suavemente por inversão, sem formar espuma.",
+      "Cubra o tubo com papel alumínio, identifique (meio de diferenciação, data) e guarde a 4 °C."
+    ]
+  },
+  {
+    "id": "dco",
+    "cat": "MEIOS DE CULTURA",
+    "name": "Diferenciação",
+    "opt": "Diferenciação (cocultura)",
+    "sub": "Cocultura: RA 1 µL/mL",
+    "acc": "#ff3df2",
+    "def": 10,
+    "parts": [
+      {
+        "k": "base",
+        "n": "DMEM/F12",
+        "t": "rest"
+      },
+      {
+        "k": "aa",
+        "n": "Antibiótico-antimicótico (AA)",
+        "t": "vol",
+        "per": 10
+      },
+      {
+        "k": "sfb",
+        "n": "SFB",
+        "t": "vol",
+        "per": 5
+      },
+      {
+        "k": "ra",
+        "n": "Ácido retinóico (RA)",
+        "s": "1 µL por mL de meio",
+        "t": "vol",
+        "per": 1,
+        "sub": "1 µL / mL"
+      }
+    ],
+    "steps": [
+      "Trabalhe no fluxo laminar, com material e frascos limpos com álcool 70%.",
+      "Pipete {base} de DMEM/F12 no tubo Falcon estéril.",
+      "Adicione {aa} de antibiótico.",
+      "Adicione {sfb} de SFB.",
+      "Adicione por último {ra} de ácido retinóico, protegendo da luz.",
+      "Homogeneíze suavemente por inversão, sem formar espuma.",
+      "Cubra o tubo com papel alumínio, identifique (meio de diferenciação, data) e guarde a 4 °C."
+    ]
+  },
+  {
+    "id": "cpronto",
+    "cat": "CONGELAMENTO",
+    "name": "Meio pronto",
+    "opt": "Congelamento: meio pronto",
+    "sub": "95% DMSO + 5% SFB",
+    "acc": "#8fd0ff",
+    "def": 10,
+    "tubos": true,
+    "parts": [
+      {
+        "k": "dmso",
+        "n": "DMSO",
+        "t": "vol",
+        "per": 950
+      },
+      {
+        "k": "sfb",
+        "n": "SFB",
+        "t": "vol",
+        "per": 50
+      }
+    ],
+    "steps": [
+      "Trabalhe no fluxo laminar, com tubo Falcon de 15 ou 50 mL.",
+      "Pipete {dmso} de DMSO.",
+      "Adicione {sfb} de SFB.",
+      "Homogeneíze e distribua 1 a 1,5 mL por tubo de congelamento."
+    ]
+  },
+  {
+    "id": "cprep",
+    "cat": "CONGELAMENTO",
+    "name": "Meio preparado",
+    "opt": "Congelamento: meio preparado",
+    "sub": "50% meio + 40% DMSO + 10% SFB",
+    "acc": "#c8b6ff",
+    "def": 10,
+    "parts": [
+      {
+        "k": "meio",
+        "n": "Meio de cultura",
+        "t": "vol",
+        "per": 500
+      },
+      {
+        "k": "dmso",
+        "n": "DMSO",
+        "t": "vol",
+        "per": 400
+      },
+      {
+        "k": "sfb",
+        "n": "SFB",
+        "t": "vol",
+        "per": 100
+      }
+    ],
+    "steps": [
+      "Trabalhe no fluxo laminar, com tubo Falcon de 15 ou 50 mL.",
+      "Mantenha o meio de cultura refrigerado, no gelo.",
+      "Pipete {meio} de meio de cultura.",
+      "Adicione {dmso} de DMSO.",
+      "Adicione {sfb} de SFB e homogeneíze."
+    ]
+  },
+  {
+    "id": "po",
+    "cat": "MEIOS DE CULTURA",
+    "name": "Meio em pó",
+    "sub": "1 pacote por litro + bicarbonato",
+    "acc": "#ffe14d",
+    "def": 1000,
+    "parts": [
+      {
+        "k": "po",
+        "n": "Pacote de meio em pó",
+        "s": "pacote de 1 L",
+        "t": "pack",
+        "per": 0.001,
+        "sub": "1 pacote / L"
+      },
+      {
+        "k": "agua",
+        "n": "Água ultrapura ou destilada",
+        "t": "vol",
+        "per": 1000,
+        "sub": "volume final"
+      },
+      {
+        "k": "bic",
+        "n": "Bicarbonato de sódio",
+        "s": "para SH-SY5Y",
+        "t": "mass",
+        "per": 1.8,
+        "sub": "1,8 g / L"
+      }
+    ],
+    "steps": [
+      "Dilua o conteúdo do pacote ({po}) em {agua} de água.",
+      "Adicione {bic} de bicarbonato de sódio (células SH-SY5Y).",
+      "Regule o pH, que deve ficar entre 7,2 e 7,4.",
+      "Filtre o meio dentro do fluxo, em membrana de 0,22 µm e frasco estéril."
+    ]
+  },
+  {
+    "id": "tripsina",
+    "cat": "SOLUÇÕES",
+    "name": "Tripsina-EDTA",
+    "sub": "0,1% tripsina + 0,05% EDTA em PBS",
+    "acc": "#ff9a3d",
+    "def": 100,
+    "parts": [
+      {
+        "k": "trip",
+        "n": "Tripsina",
+        "t": "mass",
+        "per": 1,
+        "sub": "1 mg / mL"
+      },
+      {
+        "k": "edta",
+        "n": "EDTA",
+        "t": "mass",
+        "per": 0.5,
+        "sub": "0,5 mg / mL"
+      },
+      {
+        "k": "pbs",
+        "n": "PBS",
+        "s": "para diluir",
+        "t": "vol",
+        "per": 1000,
+        "sub": "volume final"
+      }
+    ],
+    "steps": [
+      "Pese {trip} de tripsina e {edta} de EDTA.",
+      "Dilua em {pbs} de PBS.",
+      "Filtre e distribua em eppendorf."
+    ]
+  },
+  {
+    "id": "pbs",
+    "cat": "SOLUÇÕES",
+    "name": "PBS",
+    "sub": "Soluções A e B + água",
+    "acc": "#ff6ec7",
+    "def": 1000,
+    "parts": [
+      {
+        "k": "a",
+        "n": "Solução A",
+        "s": "fosfato monobásico, geladeira",
+        "t": "vol",
+        "per": 33,
+        "sub": "33 mL / L"
+      },
+      {
+        "k": "b",
+        "n": "Solução B",
+        "s": "fosfato dibásico, geladeira",
+        "t": "vol",
+        "per": 67,
+        "sub": "67 mL / L"
+      },
+      {
+        "k": "agua",
+        "n": "Água destilada",
+        "t": "vol",
+        "per": 900,
+        "sub": "900 mL / L"
+      }
+    ],
+    "steps": [
+      "Em um garrafão não estéril, misture {a} da solução A com {b} da solução B.",
+      "Complete com {agua} de água destilada.",
+      "Autoclave com a tampa semi-aberta."
+    ],
+    "extra": "<b>Estoques (100 mL cada, geladeira):</b> A = 100 mL de água ultrapura + 2,76 g de NaH2PO4. B = 100 mL de água ultrapura + 2,84 g de Na2HPO4."
+  },
+  {
+    "id": "alcool",
+    "cat": "LIMPEZA",
+    "name": "Álcool 70%",
+    "sub": "70/96 de álcool 96% + água",
+    "acc": "#ff5470",
+    "def": 1000,
+    "parts": [
+      {
+        "k": "alc",
+        "n": "Álcool 96%",
+        "t": "vol",
+        "per": 729.1667
+      },
+      {
+        "k": "agua",
+        "n": "Água destilada",
+        "t": "rest"
+      }
+    ],
+    "steps": [
+      "Meça {alc} de álcool 96%.",
+      "Adicione {agua} de água destilada, misture e identifique o frasco."
+    ]
+  },
+  {
+    "id": "lyso",
+    "cat": "LIMPEZA",
+    "name": "Lysoform 2,5%",
+    "sub": "25 mL por litro",
+    "acc": "#c98a5b",
+    "def": 1000,
+    "parts": [
+      {
+        "k": "ly",
+        "n": "Lysoform",
+        "t": "vol",
+        "per": 25
+      },
+      {
+        "k": "agua",
+        "n": "Água destilada",
+        "t": "vol",
+        "per": 975
+      }
+    ],
+    "steps": [
+      "Meça {ly} de Lysoform.",
+      "Adicione {agua} de água destilada, misture e identifique o frasco."
+    ]
+  },
+  {
+    "id": "cloro",
+    "cat": "LIMPEZA",
+    "name": "Hipoclorito 0,1%",
+    "sub": "Cloro 1% diluído 1:10",
+    "acc": "#ff7a59",
+    "def": 1000,
+    "parts": [
+      {
+        "k": "cl",
+        "n": "Cloro a 1%",
+        "t": "vol",
+        "per": 100
+      },
+      {
+        "k": "agua",
+        "n": "Água destilada",
+        "t": "vol",
+        "per": 900
+      }
+    ],
+    "steps": [
+      "Meça {cl} de cloro a 1%.",
+      "Adicione {agua} de água destilada, misture e identifique o frasco."
+    ]
+  },
+  {
+    "id": "enz",
+    "cat": "LIMPEZA",
+    "name": "Detergente enzimático",
+    "sub": "1 mL por litro",
+    "acc": "#b9a06a",
+    "def": 1000,
+    "parts": [
+      {
+        "k": "en",
+        "n": "Detergente enzimático",
+        "t": "vol",
+        "per": 1
+      },
+      {
+        "k": "agua",
+        "n": "Água destilada",
+        "t": "vol",
+        "per": 999
+      }
+    ],
+    "steps": [
+      "Meça {en} de detergente enzimático.",
+      "Adicione {agua} de água destilada, misture e identifique o frasco."
+    ]
+  }
+]
