@@ -2,7 +2,7 @@
 // Estratégia: pré-cache do app; rede primeiro (3 s) com cache de reserva para arquivos do app, para que
 // receitas atualizadas cheguem logo e, sem internet, o app abra e calcule. A sincronização com o Supabase
 // (fetch/WebSocket para *.supabase.co) NÃO passa por aqui; o app reenvia a fila quando a rede volta.
-const VERSION = 'v1';
+const VERSION = 'v2';
 const APP_CACHE = 'lab-arcade-app-' + VERSION;
 const RUNTIME_CACHE = 'lab-arcade-runtime-' + VERSION;
 const NETWORK_TIMEOUT_MS = 3000;

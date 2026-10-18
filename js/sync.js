@@ -9,14 +9,14 @@ const LS_PENDING = 'labarcade.pending';
 const LS_LAB = 'labarcade.lab';
 const SS_CLIENT = 'labarcade.client';
 
-const lsGet = (k) => { try { return localStorage.getItem(k); } catch (_) { return null; } };
-const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (_) {} };
+const lsGet = (k) => { try { return localStorage.getItem(k); } catch { return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch { /* storage bloqueado */ } };
 
 // Código do laboratório: ?lab=bancada1 na URL (fica salvo). Computadores com o mesmo código compartilham o estado.
 const cleanLab = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 32);
 function resolveLab() {
   let fromUrl = '';
-  try { fromUrl = cleanLab(new URLSearchParams(location.search).get('lab')); } catch (_) {}
+  try { fromUrl = cleanLab(new URLSearchParams(location.search).get('lab')); } catch { /* ignora */ }
   if (fromUrl) lsSet(LS_LAB, fromUrl);
   return fromUrl || cleanLab(lsGet(LS_LAB));
 }
@@ -26,10 +26,10 @@ const ENABLED = isConfigured && LAB.length >= MIN_LAB_LEN;
 // Identifica esta aba/computador para ignorar o eco dos próprios envios.
 const CLIENT_ID = (() => {
   let id = null;
-  try { id = sessionStorage.getItem(SS_CLIENT); } catch (_) {}
+  try { id = sessionStorage.getItem(SS_CLIENT); } catch { /* ignora */ }
   if (!id) {
     id = (crypto.randomUUID && crypto.randomUUID()) || Date.now() + '-' + Math.random().toString(16).slice(2);
-    try { sessionStorage.setItem(SS_CLIENT, id); } catch (_) {}
+    try { sessionStorage.setItem(SS_CLIENT, id); } catch { /* ignora */ }
   }
   return id;
 })();
@@ -37,7 +37,16 @@ const CLIENT_ID = (() => {
 let H = {};                 // callbacks: onRemote, onStatus, getRt, onSynced
 let client = null, channel = null, timer = null, flushing = false, status = '';
 let pending = {};           // scope -> { state } ainda não enviado (persistido: sobrevive a F5/queda de rede)
-try { pending = JSON.parse(lsGet(LS_PENDING) || '{}') || {}; } catch (_) { pending = {}; }
+try { pending = JSON.parse(lsGet(LS_PENDING) || '{}') || {}; } catch { pending = {}; }
+// "2026-10-18 19:01:39.560279+00" / "...T...+00:00" -> ms; NaN vira 0 (nunca bloqueia nem repete aplicação)
+function toMs(ts) {
+  const m = /^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2}:\d{2})(?:\.(\d+))?(Z|[+-]\d{2}(?::?\d{2})?)?$/.exec(String(ts));
+  if (!m) return 0;
+  let tz = m[4] || 'Z';
+  if (tz.length === 3) tz += ':00'; else if (tz.length === 5) tz = tz.slice(0, 3) + ':' + tz.slice(3);
+  const ms = Date.parse(m[1] + 'T' + m[2] + '.' + ((m[3] || '0') + '00').slice(0, 3) + tz);
+  return isNaN(ms) ? 0 : ms;
+}
 const savePending = () => lsSet(LS_PENDING, JSON.stringify(pending));
 
 function setStatus(s) {
@@ -68,7 +77,7 @@ async function flush() {
       const { data, error } = await client.rpc('lab_put', { p_lab: LAB, p_recipe: scope, p_state: item.state, p_by: CLIENT_ID });
       if (error) throw error;
       if (pending[scope] === item) delete pending[scope]; // se mudou durante o envio, continua pendente
-      if (H.onSynced) H.onSynced(scope, Date.parse(data));
+      if (H.onSynced) H.onSynced(scope, toMs(data));
       if (channel) channel.send({ type: 'broadcast', event: 'state', payload: { recipe_id: scope, state: item.state, updated_at: data, by: CLIENT_ID } });
     }
     setStatus('online');
@@ -85,7 +94,7 @@ async function flush() {
 
 // Aplica uma linha remota, exceto se há alteração local pendente (local vence) ou se já vimos esta versão.
 function applyRow(row) {
-  const scope = row.recipe_id, rt = Date.parse(row.updated_at);
+  const scope = row.recipe_id, rt = toMs(row.updated_at);
   if (pending[scope]) return;
   if (H.getRt && rt <= H.getRt(scope)) return;
   if (H.onRemote) H.onRemote(scope, row.state || {}, rt);

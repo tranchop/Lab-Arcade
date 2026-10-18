@@ -221,6 +221,7 @@ cEl.nw.addEventListener('input', plate); cEl.vw.addEventListener('input', plate)
 outCel.addEventListener('change', function (e) { onChk(outCel, e); });
 
 // ---------- ferramentas de bancada ----------
+function esc(t) { return String(t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 function g(id) { return document.getElementById(id); }
 function setAcc(c) { document.documentElement.style.setProperty('--acc', c); drawFlask(c); }
 function sup(e) { return String(e).split('').map(function (c) { return SUP[c]; }).join(''); }
@@ -259,8 +260,6 @@ function bestVol(x) { var a = Math.abs(x); return a >= 1 ? fn(x) + ' L' : a >= 1
 function bestConc(x) { var a = Math.abs(x); return a >= 1 ? fn(x) + ' M' : a >= 1e-3 ? fn(x * 1e3) + ' mM' : a >= 1e-6 ? fn(x * 1e6) + ' µM' : fn(x * 1e9) + ' nM'; }
 function bestMol(x) { var a = Math.abs(x); return a >= 1 ? fn(x) + ' mol' : a >= 1e-3 ? fn(x * 1e3) + ' mmol' : a >= 1e-6 ? fn(x * 1e6) + ' µmol' : fn(x * 1e9) + ' nmol'; }
 function wire(boxId, fnc) { var b = g(boxId); b.addEventListener('input', fnc); b.addEventListener('change', fnc); }
-function wireChk(el) { el.addEventListener('change', function (e) { onChk(el, e); }); }
-function xpBlock(n) { return '<div class="xp"><span class="xp-lab">XP</span><div class="bar" aria-hidden="true">' + new Array(n + 1).join('<i></i>') + '</div><span class="xp-n"></span></div>' + '<div class="tools"><button type="button" class="tool" data-act="copy">COPIAR RECEITA</button><button type="button" class="tool" data-act="reset">LIMPAR MARCAÇÕES</button></div>'; }
 
 
 // ----- estoque a partir da massa molar -----
@@ -281,7 +280,7 @@ var estOut = g('estOut');
 function renderEst() {
   bigFlag = false;
   setAcc('#ff6ec7');
-  var calc = g('ecalc').value, name = g('enome').value || 'composto', solv = g('esolv').value || 'solvente';
+  var calc = g('ecalc').value, name = esc(g('enome').value || 'composto'), solv = esc(g('esolv').value || 'solvente');
   g('f-ec').hidden = calc === 'c'; g('f-ev').hidden = calc === 'v'; g('f-em').hidden = calc === 'm';
   var mw = pv('mw'), puRaw = pv('pu'), pur = (puRaw || 100) / 100;
   if (puRaw > 100) { msg(estOut, 'PUREZA MÁXIMA: 100%'); return; }
@@ -326,7 +325,7 @@ g('modeCon').innerHTML =
 var conAOut = g('conAOut'), conBOut = g('conBOut');
 function renderConA() {
   bigFlag = false;
-  var calc = g('kcalc').value, unit = g('kun').value, vu = g('kvu').value;
+  var calc = g('kcalc').value, unit = esc(g('kun').value), vu = g('kvu').value;
   g('f-kc1').hidden = calc === 'c1'; g('f-kv1').hidden = calc === 'v1'; g('f-kc2').hidden = calc === 'c2'; g('f-kv2').hidden = calc === 'v2';
   var c1 = pv('kc1'), c2 = pv('kc2'), v2 = pv('kv2'), v1 = pv('kv1');
   var vlab = vu === 'uL' ? 'µL' : vu;
@@ -403,10 +402,10 @@ function copyText(t, btn) {
     var ta = document.createElement('textarea'), ok = false;
     ta.value = t; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
     document.body.appendChild(ta); ta.select();
-    try { ok = document.execCommand('copy'); } catch (_) {}
+    try { ok = document.execCommand('copy'); } catch { /* ignora */ }
     document.body.removeChild(ta); done(ok);
   }
-  try { navigator.clipboard.writeText(t).then(function () { done(true); }, fallback); } catch (_) { fallback(); }
+  try { navigator.clipboard.writeText(t).then(function () { done(true); }, fallback); } catch { fallback(); }
 }
 document.addEventListener('click', function (e) {
   var b = e.target.closest ? e.target.closest('.tool') : null;
@@ -421,13 +420,13 @@ document.addEventListener('click', function (e) {
 });
 document.addEventListener('focusin', function (e) {
   var t = e.target;
-  if (t && t.matches && t.matches('input.num, #vol')) { try { t.select(); } catch (_) {} }
+  if (t && t.matches && t.matches('input.num, #vol')) { try { t.select(); } catch { /* ignora */ } }
 });
 var up = document.getElementById('up');
 window.addEventListener('scroll', function () { up.hidden = (window.pageYOffset || document.documentElement.scrollTop) < 500; }, { passive: true });
 up.addEventListener('click', function () {
   var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  try { window.scrollTo({ top: 0, behavior: calm ? 'auto' : 'smooth' }); } catch (_) { window.scrollTo(0, 0); }
+  try { window.scrollTo({ top: 0, behavior: calm ? 'auto' : 'smooth' }); } catch { window.scrollTo(0, 0); }
 });
 
 
@@ -436,7 +435,7 @@ var curMode = 'sol';
 var LS_KEY = 'labarcade';
 // store.rec[escopo] = { inputs, checks, rt } — escopo = id da solução ou 'cel'; rt = última versão remota vista
 var store = {};
-try { store = JSON.parse(localStorage.getItem(LS_KEY) || '{}') || {}; } catch (_) { store = {}; }
+try { store = JSON.parse(localStorage.getItem(LS_KEY) || '{}') || {}; } catch { store = {}; }
 store.rec = store.rec || {};
 
 var CEL_KEYS = ['c1', 'c2', 'vf', 'nw', 'vw', 'e1', 'e2'];
@@ -466,7 +465,7 @@ function applyState(scope, st, reset) {
 function restore(scope) { applyState(scope, store.rec[scope], true); }
 
 function save() {
-  try { localStorage.setItem(LS_KEY, JSON.stringify({ mode: curMode, sol: cur.id, rec: store.rec })); } catch (_) {}
+  try { localStorage.setItem(LS_KEY, JSON.stringify({ mode: curMode, sol: cur.id, rec: store.rec })); } catch { /* ignora */ }
 }
 function stash(scope) {          // grava só localmente
   var s = snapshot(scope), prev = store.rec[scope] || {};
@@ -512,7 +511,7 @@ function onRemote(scope, st, rt) {
 
 var syncTag = document.getElementById('syncTag');
 var SYNC_TXT = { local: 'SYNC: SÓ NESTE PC', online: 'SYNC: ONLINE', offline: 'SYNC: OFFLINE (SALVO NO PC)' };
-function onStatus(s, lab) {
+function onStatus(s) {
   syncTag.hidden = false;
   syncTag.dataset.s = s;
   syncTag.textContent = SYNC_TXT[s]; // não exibe o código do laboratório na tela
