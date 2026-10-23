@@ -207,3 +207,13 @@ footer a { color: var(--cyan); }
 .tag-sync { margin-top: 8px; color: var(--dim); }
 .tag-sync[data-s="online"] { color: var(--green); }
 .tag-sync[data-s="offline"] { color: var(--orange); }
+
+/* tabela de referência de semeadura */
+.tbl-wrap { overflow-x: auto; padding: 8px 10px; }
+.tbl { width: 100%; border-collapse: collapse; font-family: var(--f-body); font-size: 22px; font-variant-numeric: tabular-nums; }
+.tbl th, .tbl td { padding: 8px 10px; text-align: right; border-bottom: 2px solid var(--line); }
+.tbl tbody tr:last-child th, .tbl tbody tr:last-child td { border-bottom: 0; }
+.tbl thead th { font-family: var(--f-display); font-size: 9px; line-height: 1.6; font-weight: 400; color: var(--dim); }
+.tbl tbody th { font-weight: 400; color: var(--yellow); text-align: left; }
+.tbl td { color: var(--ink); }
+.tbl td:last-child { color: var(--yellow); }
